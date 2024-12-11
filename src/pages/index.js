@@ -23,6 +23,10 @@ export default function Home() {
     setStep(step + 1); // Move to the next step
   };
 
+  const handleBack = () => {
+    setStep(step - 1); // Move to the previous step
+  };
+
   const handleGenerateResume = () => {
     console.log("Final Resume Data:", formData);
     // You can later implement the logic to generate a PDF here
@@ -35,6 +39,7 @@ export default function Home() {
         formData={formData}
         onFormDataChange={handleFormDataChange}
         onNext={handleNext}
+        onBack={handleBack}
         step={step}
       />
 

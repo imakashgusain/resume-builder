@@ -1,7 +1,18 @@
-export default function Form({ formData, onFormDataChange, onNext, step }) {
+export default function Form({
+  formData,
+  onFormDataChange,
+  onNext,
+  onBack,
+  step,
+}) {
   const handleSubmit = (e) => {
     e.preventDefault();
-    onNext(formData); // Pass the form data to the parent component
+    if (step < 6) {
+      onNext(formData); // Pass the form data to the parent component and move to next step
+    } else {
+      // If it's the last step, just finalize the process (Generate Resume)
+      onNext(formData);
+    }
   };
 
   const handleChange = (e) => {
@@ -95,6 +106,11 @@ export default function Form({ formData, onFormDataChange, onNext, step }) {
       )}
 
       <div>
+        {step > 1 && (
+          <button type="button" onClick={onBack}>
+            Back
+          </button>
+        )}
         {step < 6 ? (
           <button type="submit">Next</button>
         ) : (
