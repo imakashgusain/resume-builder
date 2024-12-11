@@ -12,12 +12,20 @@ export default function Home() {
     interests: "",
   });
 
+  const [step, setStep] = useState(1); // Start with the first step
+
   const handleFormDataChange = (newData) => {
-    setFormData(newData);
+    setFormData(newData); // Update form data with each step
   };
 
-  const handleFormSubmit = (newData) => {
-    setFormData(newData); // Update form data when the form is submitted
+  const handleNext = (newData) => {
+    setFormData(newData);
+    setStep(step + 1); // Move to the next step
+  };
+
+  const handleGenerateResume = () => {
+    console.log("Final Resume Data:", formData);
+    // You can later implement the logic to generate a PDF here
   };
 
   return (
@@ -26,9 +34,17 @@ export default function Home() {
       <Form
         formData={formData}
         onFormDataChange={handleFormDataChange}
-        onSubmit={handleFormSubmit}
+        onNext={handleNext}
+        step={step}
       />
-      <Preview formData={formData} /> {/* Pass form data to Preview */}
+
+      {step === 7 && <Preview formData={formData} />}
+
+      {step === 7 && (
+        <div>
+          <button onClick={handleGenerateResume}>Generate Resume</button>
+        </div>
+      )}
     </div>
   );
 }

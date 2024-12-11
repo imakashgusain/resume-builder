@@ -1,11 +1,12 @@
 export default function Preview({ formData }) {
   return (
-    <div className="resume-preview">
+    <div
+      style={{ border: "1px solid #ddd", padding: "20px", marginTop: "20px" }}
+    >
       <h2>Resume Preview</h2>
       <p>
         <strong>Name:</strong> {formData.name}
       </p>
-      <h4>Address</h4>
       <p>
         <strong>Address:</strong> {formData.address}
       </p>
