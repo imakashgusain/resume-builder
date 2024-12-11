@@ -1,0 +1,22 @@
+/* In your globals.css */
+.resume-preview {
+  font-family: "Arial", sans-serif;
+  max-width: 600px;
+  margin: auto;
+}
+
+.resume-preview h3 {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.resume-preview p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.resume-preview h4 {
+  font-size: 1.2rem;
+  margin-top: 10px;
+  font-weight: bold;
+}
