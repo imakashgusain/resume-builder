@@ -1,190 +1,160 @@
+import React from "react";
+
 export default function Form({
   formData,
   onFormDataChange,
   onNext,
   onBack,
   step,
+  selectedTemplate,
+  onTemplateChange,
 }) {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onNext(formData); // Pass the form data to the parent component
-  };
-
-  const handleChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
-    onFormDataChange({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleAddProject = () => {
-    onFormDataChange({
-      ...formData,
-      projects: [
-        ...formData.projects,
-        { projectName: "", projectDescription: "" },
-      ],
-    });
-  };
-
-  const handleProjectChange = (index, field, value) => {
-    const updatedProjects = formData.projects.map((project, i) =>
-      i === index ? { ...project, [field]: value } : project
-    );
-    onFormDataChange({ ...formData, projects: updatedProjects });
-  };
-
-  const handleRemoveProject = (index) => {
-    const updatedProjects = formData.projects.filter((_, i) => i !== index);
-    onFormDataChange({ ...formData, projects: updatedProjects });
+    onFormDataChange({ ...formData, [name]: value });
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form>
+      {step === 0 && (
+        <div>
+          <h3>Basic Details</h3>
+          <label>Name:</label>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleInputChange}
+          />
+          <label>Address:</label>
+          <input
+            type="text"
+            name="address"
+            value={formData.address}
+            onChange={handleInputChange}
+          />
+          <label>Phone Number:</label>
+          <input
+            type="text"
+            name="phoneNumber"
+            value={formData.phoneNumber}
+            onChange={handleInputChange}
+          />
+          <label>Summary:</label>
+          <textarea
+            name="summary"
+            value={formData.summary}
+            onChange={handleInputChange}
+          ></textarea>
+          <label>Template:</label>
+          <select value={selectedTemplate} onChange={onTemplateChange}>
+            <option value="classic">Classic</option>
+            <option value="modern">Modern</option>
+            <option value="creative">Creative</option>
+            <option value="minimalist">Minimalist</option>
+          </select>
+        </div>
+      )}
       {step === 1 && (
         <div>
-          <label>
-            Name:
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Address:
-            <input
-              type="text"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Phone Number:
-            <input
-              type="text"
-              name="phoneNumber"
-              value={formData.phoneNumber}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Summary:
-            <textarea
-              name="summary"
-              value={formData.summary}
-              onChange={handleChange}
-            />
-          </label>
+          <h3>Education</h3>
+          <textarea
+            name="education"
+            value={formData.education}
+            onChange={handleInputChange}
+            placeholder="Enter your educational details"
+          />
         </div>
       )}
-
       {step === 2 && (
         <div>
-          <label>
-            Education:
-            <textarea
-              name="education"
-              value={formData.education}
-              onChange={handleChange}
-            />
-          </label>
+          <h3>Work Experience</h3>
+          <textarea
+            name="workExperience"
+            value={formData.workExperience}
+            onChange={handleInputChange}
+            placeholder="Enter your work experience details"
+          />
         </div>
       )}
-
       {step === 3 && (
         <div>
-          <label>
-            Work Experience:
-            <textarea
-              name="experience"
-              value={formData.experience}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-      )}
-
-      {step === 4 && (
-        <div>
-          <h4>Projects</h4>
+          <h3>Projects</h3>
           {formData.projects.map((project, index) => (
             <div key={index}>
-              <label>
-                Project Name:
-                <input
-                  type="text"
-                  value={project.projectName}
-                  onChange={(e) =>
-                    handleProjectChange(index, "projectName", e.target.value)
-                  }
-                />
-              </label>
-              <label>
-                Project Description:
-                <textarea
-                  value={project.projectDescription}
-                  onChange={(e) =>
-                    handleProjectChange(
-                      index,
-                      "projectDescription",
-                      e.target.value
-                    )
-                  }
-                />
-              </label>
-              <button type="button" onClick={() => handleRemoveProject(index)}>
-                Remove Project
-              </button>
+              <label>Project Name:</label>
+              <input
+                type="text"
+                value={project.projectName}
+                onChange={(e) =>
+                  onFormDataChange({
+                    ...formData,
+                    projects: formData.projects.map((p, i) =>
+                      i === index ? { ...p, projectName: e.target.value } : p
+                    ),
+                  })
+                }
+              />
+              <label>Project Description:</label>
+              <textarea
+                value={project.projectDescription}
+                onChange={(e) =>
+                  onFormDataChange({
+                    ...formData,
+                    projects: formData.projects.map((p, i) =>
+                      i === index
+                        ? { ...p, projectDescription: e.target.value }
+                        : p
+                    ),
+                  })
+                }
+              />
             </div>
           ))}
-          <button type="button" onClick={handleAddProject}>
+          <button
+            type="button"
+            onClick={() =>
+              onFormDataChange({
+                ...formData,
+                projects: [
+                  ...formData.projects,
+                  { projectName: "", projectDescription: "" },
+                ],
+              })
+            }
+          >
             Add Project
           </button>
         </div>
       )}
-
+      {step === 4 && (
+        <div>
+          <h3>Skills</h3>
+          <textarea
+            name="skills"
+            value={formData.skills}
+            onChange={handleInputChange}
+            placeholder="Enter your skills"
+          />
+        </div>
+      )}
       {step === 5 && (
         <div>
-          <label>
-            Skills:
-            <textarea
-              name="skills"
-              value={formData.skills}
-              onChange={handleChange}
-            />
-          </label>
+          <h3>Interests</h3>
+          <textarea
+            name="interests"
+            value={formData.interests}
+            onChange={handleInputChange}
+            placeholder="Enter your interests"
+          />
         </div>
       )}
-
-      {step === 6 && (
-        <div>
-          <label>
-            Interests:
-            <textarea
-              name="interests"
-              value={formData.interests}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-      )}
-
-      <div>
-        {step > 1 && step < 6 && (
-          <button type="button" onClick={onBack}>
-            Back
-          </button>
-        )}
-        {step < 6 ? (
-          <button type="submit">Next</button>
-        ) : (
-          <button type="submit">Generate Resume</button>
-        )}
-      </div>
+      <button type="button" onClick={onBack} disabled={step === 0}>
+        Back
+      </button>
+      <button type="button" onClick={onNext}>
+        {step === 5 ? "Preview" : "Next"}
+      </button>
     </form>
   );
 }

@@ -1,4 +1,8 @@
-export default function Preview({ formData }) {
+import { templates } from "./templates";
+
+export default function Preview({ formData, selectedTemplate }) {
+  const Template = templates[selectedTemplate]?.render;
+
   return (
     <div
       style={{ border: "1px solid #ddd", padding: "20px", marginTop: "20px" }}
@@ -34,6 +38,13 @@ export default function Preview({ formData }) {
       <p>{formData.skills}</p>
       <h4>Interests</h4>
       <p>{formData.interests}</p>
+      {Template ? (
+        <Template
+          formData={{ ...formData, projects: formData.projects || [] }}
+        />
+      ) : (
+        <p>No template selected</p>
+      )}
     </div>
   );
 }
