@@ -18,6 +18,28 @@ export default function Form({
     });
   };
 
+  const handleAddProject = () => {
+    onFormDataChange({
+      ...formData,
+      projects: [
+        ...formData.projects,
+        { projectName: "", projectDescription: "" },
+      ],
+    });
+  };
+
+  const handleProjectChange = (index, field, value) => {
+    const updatedProjects = formData.projects.map((project, i) =>
+      i === index ? { ...project, [field]: value } : project
+    );
+    onFormDataChange({ ...formData, projects: updatedProjects });
+  };
+
+  const handleRemoveProject = (index) => {
+    const updatedProjects = formData.projects.filter((_, i) => i !== index);
+    onFormDataChange({ ...formData, projects: updatedProjects });
+  };
+
   return (
     <form onSubmit={handleSubmit}>
       {step === 1 && (
@@ -31,10 +53,6 @@ export default function Form({
               onChange={handleChange}
             />
           </label>
-        </div>
-      )}
-      {step === 2 && (
-        <div>
           <label>
             Address:
             <input
@@ -44,9 +62,27 @@ export default function Form({
               onChange={handleChange}
             />
           </label>
+          <label>
+            Phone Number:
+            <input
+              type="text"
+              name="phoneNumber"
+              value={formData.phoneNumber}
+              onChange={handleChange}
+            />
+          </label>
+          <label>
+            Summary:
+            <textarea
+              name="summary"
+              value={formData.summary}
+              onChange={handleChange}
+            />
+          </label>
         </div>
       )}
-      {step === 3 && (
+
+      {step === 2 && (
         <div>
           <label>
             Education:
@@ -58,7 +94,60 @@ export default function Form({
           </label>
         </div>
       )}
+
+      {step === 3 && (
+        <div>
+          <label>
+            Work Experience:
+            <textarea
+              name="experience"
+              value={formData.experience}
+              onChange={handleChange}
+            />
+          </label>
+        </div>
+      )}
+
       {step === 4 && (
+        <div>
+          <h4>Projects</h4>
+          {formData.projects.map((project, index) => (
+            <div key={index}>
+              <label>
+                Project Name:
+                <input
+                  type="text"
+                  value={project.projectName}
+                  onChange={(e) =>
+                    handleProjectChange(index, "projectName", e.target.value)
+                  }
+                />
+              </label>
+              <label>
+                Project Description:
+                <textarea
+                  value={project.projectDescription}
+                  onChange={(e) =>
+                    handleProjectChange(
+                      index,
+                      "projectDescription",
+                      e.target.value
+                    )
+                  }
+                />
+              </label>
+              <button type="button" onClick={() => handleRemoveProject(index)}>
+                Remove Project
+              </button>
+            </div>
+          ))}
+          <button type="button" onClick={handleAddProject}>
+            Add Project
+          </button>
+        </div>
+      )}
+
+      {step === 5 && (
         <div>
           <label>
             Skills:
@@ -70,7 +159,8 @@ export default function Form({
           </label>
         </div>
       )}
-      {step === 5 && (
+
+      {step === 6 && (
         <div>
           <label>
             Interests:
@@ -82,37 +172,14 @@ export default function Form({
           </label>
         </div>
       )}
-      {step === 6 && (
-        <div>
-          <label>
-            Project Details:
-            <textarea
-              name="projects"
-              value={formData.projects}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-      )}
-      {step === 7 && (
-        <div>
-          <label>
-            Certificates:
-            <textarea
-              name="certificates"
-              value={formData.certificates}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-      )}
+
       <div>
-        {step > 1 && (
+        {step > 1 && step < 6 && (
           <button type="button" onClick={onBack}>
             Back
           </button>
         )}
-        {step < 7 ? (
+        {step < 6 ? (
           <button type="submit">Next</button>
         ) : (
           <button type="submit">Generate Resume</button>

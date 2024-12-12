@@ -7,11 +7,13 @@ export default function Home() {
   const [formData, setFormData] = useState({
     name: "",
     address: "",
+    phoneNumber: "",
+    summary: "",
     education: "",
+    experience: "",
+    projects: [],
     skills: "",
     interests: "",
-    projects: "",
-    certificates: "",
   });
 
   const [step, setStep] = useState(1); // Start with the first step
@@ -42,12 +44,26 @@ export default function Home() {
     doc.text("Resume", 14, 20);
     doc.text(`Name: ${formData.name}`, 14, 30);
     doc.text(`Address: ${formData.address}`, 14, 40);
-    doc.text(`Education: ${formData.education}`, 14, 50);
-    doc.text(`Skills: ${formData.skills}`, 14, 60);
-    doc.text(`Interests: ${formData.interests}`, 14, 70);
-    doc.text(`Project Details: ${formData.projects}`, 14, 80);
-    doc.text(`Certificates: ${formData.certificates}`, 14, 90);
+    doc.text(`Phone Number: ${formData.phoneNumber}`, 14, 50);
+    doc.text(`Summary: ${formData.summary}`, 14, 60);
+    doc.text(`Education: ${formData.education}`, 14, 70);
+    doc.text(`Experience: ${formData.experience}`, 14, 80);
+    formData.projects.forEach((project, index) => {
+      doc.text(
+        `Project ${index + 1}: ${project.projectName}`,
+        14,
+        90 + index * 10
+      );
+      doc.text(
+        `Description: ${project.projectDescription}`,
+        14,
+        100 + index * 10
+      );
+    });
+    doc.text(`Skills: ${formData.skills}`, 14, 110);
+    doc.text(`Interests: ${formData.interests}`, 14, 120);
 
+    // Save the generated PDF
     doc.save(`${formData.name}_Resume.pdf`);
   };
 
