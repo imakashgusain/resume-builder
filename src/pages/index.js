@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { jsPDF } from "jspdf";
 import Form from "../components/Form";
 import Preview from "../components/Preview";
 
@@ -32,6 +33,23 @@ export default function Home() {
     // You can later implement the logic to generate a PDF here
   };
 
+  const generatePDF = () => {
+    const doc = new jsPDF();
+
+    doc.setFont("helvetica", "normal");
+
+    doc.text("Resume", 14, 20);
+    doc.text(`Name: ${formData.name}`, 14, 30);
+    doc.text(`Address: ${formData.address}`, 14, 40);
+    doc.text(`Education: ${formData.education}`, 14, 50);
+    doc.text(`Experience: ${formData.experience}`, 14, 60);
+    doc.text(`Skills: ${formData.skills}`, 14, 70);
+    doc.text(`Interests: ${formData.interests}`, 14, 80);
+
+    // Save the generated PDF
+    doc.save(`${formData.name}_Resume.pdf`);
+  };
+
   return (
     <div>
       <h1>Resume Builder</h1>
@@ -48,6 +66,7 @@ export default function Home() {
       {step === 7 && (
         <div>
           <button onClick={handleGenerateResume}>Generate Resume</button>
+          <button onClick={generatePDF}>Download Resume</button>
         </div>
       )}
     </div>
