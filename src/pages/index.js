@@ -8,9 +8,10 @@ export default function Home() {
     name: "",
     address: "",
     education: "",
-    experience: "",
     skills: "",
     interests: "",
+    projects: "",
+    certificates: "",
   });
 
   const [step, setStep] = useState(1); // Start with the first step
@@ -42,11 +43,11 @@ export default function Home() {
     doc.text(`Name: ${formData.name}`, 14, 30);
     doc.text(`Address: ${formData.address}`, 14, 40);
     doc.text(`Education: ${formData.education}`, 14, 50);
-    doc.text(`Experience: ${formData.experience}`, 14, 60);
-    doc.text(`Skills: ${formData.skills}`, 14, 70);
-    doc.text(`Interests: ${formData.interests}`, 14, 80);
+    doc.text(`Skills: ${formData.skills}`, 14, 60);
+    doc.text(`Interests: ${formData.interests}`, 14, 70);
+    doc.text(`Project Details: ${formData.projects}`, 14, 80);
+    doc.text(`Certificates: ${formData.certificates}`, 14, 90);
 
-    // Save the generated PDF
     doc.save(`${formData.name}_Resume.pdf`);
   };
 

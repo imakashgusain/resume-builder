@@ -12,12 +12,14 @@ export default function Preview({ formData }) {
       </p>
       <h4>Education</h4>
       <p>{formData.education}</p>
-      <h4>Experience</h4>
-      <p>{formData.experience}</p>
       <h4>Skills</h4>
       <p>{formData.skills}</p>
       <h4>Interests</h4>
       <p>{formData.interests}</p>
+      <h4>Project Details</h4>
+      <p>{formData.projects}</p>
+      <h4>Certificates</h4>
+      <p>{formData.certificates}</p>
     </div>
   );
 }

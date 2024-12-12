@@ -1,4 +1,10 @@
-export default function Form({ formData, onFormDataChange, onNext, step }) {
+export default function Form({
+  formData,
+  onFormDataChange,
+  onNext,
+  onBack,
+  step,
+}) {
   const handleSubmit = (e) => {
     e.preventDefault();
     onNext(formData); // Pass the form data to the parent component
@@ -27,7 +33,6 @@ export default function Form({ formData, onFormDataChange, onNext, step }) {
           </label>
         </div>
       )}
-
       {step === 2 && (
         <div>
           <label>
@@ -41,7 +46,6 @@ export default function Form({ formData, onFormDataChange, onNext, step }) {
           </label>
         </div>
       )}
-
       {step === 3 && (
         <div>
           <label>
@@ -54,21 +58,7 @@ export default function Form({ formData, onFormDataChange, onNext, step }) {
           </label>
         </div>
       )}
-
       {step === 4 && (
-        <div>
-          <label>
-            Experience:
-            <textarea
-              name="experience"
-              value={formData.experience}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-      )}
-
-      {step === 5 && (
         <div>
           <label>
             Skills:
@@ -80,8 +70,7 @@ export default function Form({ formData, onFormDataChange, onNext, step }) {
           </label>
         </div>
       )}
-
-      {step === 6 && (
+      {step === 5 && (
         <div>
           <label>
             Interests:
@@ -93,9 +82,37 @@ export default function Form({ formData, onFormDataChange, onNext, step }) {
           </label>
         </div>
       )}
-
+      {step === 6 && (
+        <div>
+          <label>
+            Project Details:
+            <textarea
+              name="projects"
+              value={formData.projects}
+              onChange={handleChange}
+            />
+          </label>
+        </div>
+      )}
+      {step === 7 && (
+        <div>
+          <label>
+            Certificates:
+            <textarea
+              name="certificates"
+              value={formData.certificates}
+              onChange={handleChange}
+            />
+          </label>
+        </div>
+      )}
       <div>
-        {step < 6 ? (
+        {step > 1 && (
+          <button type="button" onClick={onBack}>
+            Back
+          </button>
+        )}
+        {step < 7 ? (
           <button type="submit">Next</button>
         ) : (
           <button type="submit">Generate Resume</button>
