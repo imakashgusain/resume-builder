@@ -52,6 +52,7 @@ export default function Form({
             <option value="modern">Modern</option>
             <option value="creative">Creative</option>
             <option value="minimalist">Minimalist</option>
+            <option value="premium">Premium</option>
           </select>
         </div>
       )}
