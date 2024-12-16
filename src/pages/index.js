@@ -8,13 +8,13 @@ export default function App() {
     address: "",
     phoneNumber: "",
     summary: "",
-    education: "",
+    education: [{ degree: "", year: "", percentage: "" }],
     projects: [],
     skills: "",
     interests: "",
   });
   const [step, setStep] = useState(0);
-  const [selectedTemplate, setSelectedTemplate] = useState("classic");
+  const [selectedTemplate, setSelectedTemplate] = useState("premium");
 
   const handleNext = () => setStep((prev) => prev + 1);
   const handleBack = () => setStep((prev) => prev - 1);

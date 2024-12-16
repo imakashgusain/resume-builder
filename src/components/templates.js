@@ -22,8 +22,28 @@ export const templates = {
           </header>
           <main style={styles.main}>
             <section style={styles.section}>
-              <h2 style={styles.sectionTitle}>Education</h2>
-              <p>{formData.education || "Your education details here."}</p>
+              <h4>Education</h4>
+              {Array.isArray(formData.education) &&
+              formData.education.length > 0 ? (
+                formData.education.map((edu, index) => (
+                  <div key={index} style={{ marginBottom: "10px" }}>
+                    <p>
+                      <strong>Degree:</strong> {edu.degree}
+                    </p>
+                    <p>
+                      <strong>Year:</strong> {edu.year}
+                    </p>
+                    <p>
+                      <strong>Percentage:</strong> {edu.percentage}%
+                    </p>
+                  </div>
+                ))
+              ) : (
+                <p>No education details provided.</p>
+              )}
+
+              {/* <h2 style={styles.sectionTitle}>Education</h2>
+              <p>{formData.education || "Your education details here."}</p> */}
             </section>
             <section style={styles.section}>
               <h2 style={styles.sectionTitle}>Work Experience</h2>

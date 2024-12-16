@@ -71,16 +71,89 @@ export default function Form({
         </div>
       )}
       {step === 1 && (
-        <div className="form-section">
+        <div>
           <h3>Education</h3>
-          <textarea
-            name="education"
-            value={formData.education}
-            onChange={handleInputChange}
-            placeholder="Enter your educational details"
-          />
+          {formData.education.map((educationItem, index) => (
+            <div
+              key={index}
+              style={{
+                border: "1px solid #ddd",
+                padding: "10px",
+                marginBottom: "10px",
+              }}
+            >
+              <label>Degree:</label>
+              <input
+                type="text"
+                value={educationItem.degree}
+                onChange={(e) =>
+                  onFormDataChange({
+                    ...formData,
+                    education: formData.education.map((item, i) =>
+                      i === index ? { ...item, degree: e.target.value } : item
+                    ),
+                  })
+                }
+              />
+              <label>Year:</label>
+              <input
+                type="number"
+                value={educationItem.year}
+                onChange={(e) =>
+                  onFormDataChange({
+                    ...formData,
+                    education: formData.education.map((item, i) =>
+                      i === index ? { ...item, year: e.target.value } : item
+                    ),
+                  })
+                }
+              />
+              <label>Percentage:</label>
+              <input
+                type="number"
+                value={educationItem.percentage}
+                onChange={(e) =>
+                  onFormDataChange({
+                    ...formData,
+                    education: formData.education.map((item, i) =>
+                      i === index
+                        ? { ...item, percentage: e.target.value }
+                        : item
+                    ),
+                  })
+                }
+              />
+              <button
+                type="button"
+                style={{ color: "red", marginTop: "10px" }}
+                onClick={() =>
+                  onFormDataChange({
+                    ...formData,
+                    education: formData.education.filter((_, i) => i !== index),
+                  })
+                }
+              >
+                Remove Education
+              </button>
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={() =>
+              onFormDataChange({
+                ...formData,
+                education: [
+                  ...formData.education,
+                  { degree: "", year: "", percentage: "" },
+                ],
+              })
+            }
+          >
+            Add More Education
+          </button>
         </div>
       )}
+
       {step === 2 && (
         <div className="form-section">
           <h3>Work Experience</h3>
