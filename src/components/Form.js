@@ -1,5 +1,5 @@
 import React from "react";
-
+import "../styles/form.css";
 export default function Form({
   formData,
   onFormDataChange,
@@ -15,49 +15,63 @@ export default function Form({
   };
 
   return (
-    <form>
+    <form className="form-container">
       {step === 0 && (
-        <div>
+        <div className="form-section">
           <h3>Basic Details</h3>
-          <label>Name:</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-          />
-          <label>Address:</label>
-          <input
-            type="text"
-            name="address"
-            value={formData.address}
-            onChange={handleInputChange}
-          />
-          <label>Phone Number:</label>
-          <input
-            type="text"
-            name="phoneNumber"
-            value={formData.phoneNumber}
-            onChange={handleInputChange}
-          />
-          <label>Summary:</label>
-          <textarea
-            name="summary"
-            value={formData.summary}
-            onChange={handleInputChange}
-          ></textarea>
-          <label>Template:</label>
-          <select value={selectedTemplate} onChange={onTemplateChange}>
-            <option value="classic">Classic</option>
-            <option value="modern">Modern</option>
-            <option value="creative">Creative</option>
-            <option value="minimalist">Minimalist</option>
-            <option value="premium">Premium</option>
-          </select>
+          <div className="form-group">
+            <label>Name:</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+              placeholder="Enter your name"
+            />
+          </div>
+          <div className="form-group">
+            <label>Address:</label>
+            <input
+              type="text"
+              name="address"
+              value={formData.address}
+              onChange={handleInputChange}
+              placeholder="Enter your address"
+            />
+          </div>
+          <div className="form-group">
+            <label>Phone Number:</label>
+            <input
+              type="text"
+              name="phoneNumber"
+              value={formData.phoneNumber}
+              onChange={handleInputChange}
+              placeholder="Enter your phone number"
+            />
+          </div>
+          <div className="form-group">
+            <label>Summary:</label>
+            <textarea
+              name="summary"
+              value={formData.summary}
+              onChange={handleInputChange}
+              placeholder="Write a brief summary"
+            ></textarea>
+          </div>
+          <div className="form-group">
+            <label>Template:</label>
+            <select value={selectedTemplate} onChange={onTemplateChange}>
+              <option value="classic">Classic</option>
+              <option value="modern">Modern</option>
+              <option value="creative">Creative</option>
+              <option value="minimalist">Minimalist</option>
+              <option value="premium">Premium</option>
+            </select>
+          </div>
         </div>
       )}
       {step === 1 && (
-        <div>
+        <div className="form-section">
           <h3>Education</h3>
           <textarea
             name="education"
@@ -68,7 +82,7 @@ export default function Form({
         </div>
       )}
       {step === 2 && (
-        <div>
+        <div className="form-section">
           <h3>Work Experience</h3>
           <textarea
             name="workExperience"
@@ -79,41 +93,48 @@ export default function Form({
         </div>
       )}
       {step === 3 && (
-        <div>
+        <div className="form-section">
           <h3>Projects</h3>
           {formData.projects.map((project, index) => (
-            <div key={index}>
-              <label>Project Name:</label>
-              <input
-                type="text"
-                value={project.projectName}
-                onChange={(e) =>
-                  onFormDataChange({
-                    ...formData,
-                    projects: formData.projects.map((p, i) =>
-                      i === index ? { ...p, projectName: e.target.value } : p
-                    ),
-                  })
-                }
-              />
-              <label>Project Description:</label>
-              <textarea
-                value={project.projectDescription}
-                onChange={(e) =>
-                  onFormDataChange({
-                    ...formData,
-                    projects: formData.projects.map((p, i) =>
-                      i === index
-                        ? { ...p, projectDescription: e.target.value }
-                        : p
-                    ),
-                  })
-                }
-              />
+            <div key={index} className="project-group">
+              <div className="form-group">
+                <label>Project Name:</label>
+                <input
+                  type="text"
+                  value={project.projectName}
+                  onChange={(e) =>
+                    onFormDataChange({
+                      ...formData,
+                      projects: formData.projects.map((p, i) =>
+                        i === index ? { ...p, projectName: e.target.value } : p
+                      ),
+                    })
+                  }
+                  placeholder="Enter project name"
+                />
+              </div>
+              <div className="form-group">
+                <label>Project Description:</label>
+                <textarea
+                  value={project.projectDescription}
+                  onChange={(e) =>
+                    onFormDataChange({
+                      ...formData,
+                      projects: formData.projects.map((p, i) =>
+                        i === index
+                          ? { ...p, projectDescription: e.target.value }
+                          : p
+                      ),
+                    })
+                  }
+                  placeholder="Enter project description"
+                ></textarea>
+              </div>
             </div>
           ))}
           <button
             type="button"
+            className="add-button"
             onClick={() =>
               onFormDataChange({
                 ...formData,
@@ -129,7 +150,7 @@ export default function Form({
         </div>
       )}
       {step === 4 && (
-        <div>
+        <div className="form-section">
           <h3>Skills</h3>
           <textarea
             name="skills"
@@ -140,7 +161,7 @@ export default function Form({
         </div>
       )}
       {step === 5 && (
-        <div>
+        <div className="form-section">
           <h3>Interests</h3>
           <textarea
             name="interests"
@@ -150,12 +171,19 @@ export default function Form({
           />
         </div>
       )}
-      <button type="button" onClick={onBack} disabled={step === 0}>
-        Back
-      </button>
-      <button type="button" onClick={onNext}>
-        {step === 5 ? "Preview" : "Next"}
-      </button>
+      <div className="form-navigation">
+        <button
+          type="button"
+          onClick={onBack}
+          disabled={step === 0}
+          className="nav-button"
+        >
+          Back
+        </button>
+        <button type="button" onClick={onNext} className="nav-button">
+          {step === 5 ? "Preview" : "Next"}
+        </button>
+      </div>
     </form>
   );
 }
